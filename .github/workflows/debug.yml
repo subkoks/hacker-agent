@@ -1,0 +1,44 @@
+name: Debug Health Check
+
+on:
+  schedule:
+    - cron: "13 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Setup Python
+        run: uv python install 3.13
+
+      - name: Sync dependencies
+        run: uv sync --extra dev
+
+      - name: Ruff
+        run: uv run ruff check src tests
+
+      - name: Mypy
+        run: uv run mypy src
+
+      - name: Bandit
+        run: uv run bandit -r src
+
+      - name: CLI smoke
+        run: |
+          uv run python -m hacker_agent --version
+          uv run python -m hacker_agent stats
+          uv run python -m hacker_agent ghidra tools | head -20
+
+      - name: Repo footprint
+        run: |
+          echo "Python files: $(find src tests -name '*.py' | wc -l)"
+          echo "Shell scripts: $(find scripts -name '*.sh' | wc -l)"
+          echo "Last commit: $(git log -1 --oneline)"

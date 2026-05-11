@@ -1,0 +1,70 @@
+name: Auto Commit
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "hacker-agent-bot"
+          git config user.email "bot@hacker-agent.local"
+
+      - name: Detect changes
+        id: changes
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "changes=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "changes=false" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Create feature branch
+        if: steps.changes.outputs.changes == 'true'
+        id: branch
+        run: |
+          STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
+          BR="auto/${STAMP}"
+          git checkout -b "${BR}"
+          echo "branch=${BR}" >> "${GITHUB_OUTPUT}"
+
+      - name: Commit & push (feature branch only — never main)
+        if: steps.changes.outputs.changes == 'true'
+        run: |
+          # Stage specific tracked + changed files; avoid -A to keep CI deterministic.
+          while IFS= read -r f; do
+            [[ -n "${f}" ]] && git add -- "${f}"
+          done < <(git status --porcelain | awk '{print $2}')
+          git commit -m "chore(auto): scheduled update $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          git push -u origin "${{ steps.branch.outputs.branch }}"
+
+      - name: Open pull request to main
+        if: steps.changes.outputs.changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --base main \
+            --head "${{ steps.branch.outputs.branch }}" \
+            --title "auto: scheduled update" \
+            --body "Automated update from scheduled auto-commit job. Review and merge if green." \
+            || echo "PR creation skipped (likely already exists)"

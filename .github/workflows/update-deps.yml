@@ -1,0 +1,55 @@
+name: Update Dependencies
+
+on:
+  schedule:
+    - cron: "37 2 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-deps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install pip-tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pip-tools
+
+      - name: Generate requirements.txt
+        run: |
+          if [[ ! -f requirements.in ]]; then
+            echo "requirements.in missing; nothing to do"
+            exit 0
+          fi
+          pip-compile --upgrade --resolver=backtracking \
+            --output-file=requirements.txt \
+            requirements.in
+
+      - name: Open update PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: deps/auto-update
+          base: main
+          commit-message: "deps: refresh requirements.txt via pip-compile"
+          title: "deps: automated dependency update"
+          body: |
+            Automated dependency refresh via `pip-compile`.
+
+            - Generated from `requirements.in`
+            - Please review the diff and verify CI is green before merging
+          add-paths: |
+            requirements.txt
+          delete-branch: true
