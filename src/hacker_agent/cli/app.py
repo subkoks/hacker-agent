@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import logging
 from collections import Counter
+from dataclasses import asdict
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Annotated, Any
@@ -424,7 +425,7 @@ def stake_verify_rtp(
     if game != "crash":
         raise typer.BadParameter("Only 'crash' RTP simulation is implemented today.")
     result = StakeEngineGameMath.simulate_crash_rtp(rounds=rounds, cash_out_at=cash_out_at)
-    console.print_json(json.dumps(result.__dict__, indent=2))
+    console.print_json(json.dumps(asdict(result), indent=2))
 
 
 @stake_app.command("seeds")

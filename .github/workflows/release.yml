@@ -1,0 +1,120 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to release (e.g. v0.2.1)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build wheel + sdist
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.meta.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Setup Python
+        run: uv python install 3.13
+
+      - name: Sync dependencies
+        run: uv sync --extra dev
+
+      - name: Test
+        run: uv run pytest -q
+
+      - name: Resolve version
+        id: meta
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            TAG="${{ inputs.tag }}"
+          else
+            TAG="${GITHUB_REF#refs/tags/}"
+          fi
+          VERSION="${TAG#v}"
+          PYPROJECT_VERSION=$(uv run python -c "import tomllib, pathlib; print(tomllib.loads(pathlib.Path('pyproject.toml').read_text())['project']['version'])")
+          if [[ "${PYPROJECT_VERSION}" != "${VERSION}" ]]; then
+            echo "::error::tag ${TAG} (version ${VERSION}) does not match pyproject version ${PYPROJECT_VERSION}"
+            exit 1
+          fi
+          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
+          echo "tag=${TAG}" >> "${GITHUB_OUTPUT}"
+
+      - name: Build
+        run: uv build
+
+      - name: List artifacts
+        run: ls -la dist/
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  release:
+    name: Publish GitHub release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Extract changelog section
+        id: changelog
+        run: |
+          VERSION="${{ needs.build.outputs.version }}"
+          NOTES_FILE="$(mktemp)"
+          uv_python=python3
+          if ! command -v $uv_python >/dev/null; then uv_python=python; fi
+          $uv_python - "${VERSION}" "${NOTES_FILE}" <<'PY'
+          import pathlib, re, sys
+          version, out_path = sys.argv[1], sys.argv[2]
+          text = pathlib.Path("docs/CHANGELOG.md").read_text(encoding="utf-8")
+          headings = list(re.finditer(rf"^## \[{re.escape(version)}\][^\n]*$", text, flags=re.M))
+          if not headings:
+              pathlib.Path(out_path).write_text(f"Release {version}.\n", encoding="utf-8")
+              raise SystemExit(0)
+          start = headings[0].end()
+          rest = text[start:]
+          next_match = re.search(r"^## \[", rest, flags=re.M)
+          body = rest[: next_match.start()] if next_match else rest
+          pathlib.Path(out_path).write_text(body.strip() + "\n", encoding="utf-8")
+          PY
+          echo "notes_path=${NOTES_FILE}" >> "${GITHUB_OUTPUT}"
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          if [[ -z "${TAG}" || "${TAG}" == "${GITHUB_REF}" ]]; then
+            TAG="${{ inputs.tag }}"
+          fi
+          gh release create "${TAG}" \
+            --title "hacker-agent ${TAG}" \
+            --notes-file "${{ steps.changelog.outputs.notes_path }}" \
+            dist/*
