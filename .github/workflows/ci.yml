@@ -2,13 +2,14 @@ name: CI
 
 on:
   push:
-    branches: [main, "auto/**", "feature/**"]
+    branches: [main, develop, "auto/**", "feature/**", "fix/**", "chore/**", "deps/**"]
   pull_request:
-    branches: [main]
+    branches: [main, develop]
   workflow_dispatch:
 
 jobs:
-  test:
+  ci:
+    name: ci
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -37,7 +38,7 @@ jobs:
         run: uv run mypy src
 
       - name: Pytest
-        run: uv run pytest -q --cov=hacker_agent --cov-report=term-missing
+        run: uv run pytest -q --cov=src/hacker_agent --cov-report=term-missing
 
       - name: CLI smoke
         run: uv run python -m hacker_agent --version
