@@ -102,6 +102,10 @@ scripts/auto-mode.sh stop
 - CISA KEV catalog: <https://www.cisa.gov/known-exploited-vulnerabilities-catalog>
 - Stake Engine docs: <https://docs.stake-engine.com>
 
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the development setup, branch flow, and code standards. Vulnerability reports go through [`docs/SECURITY.md`](docs/SECURITY.md), not public issues. Community expectations live in [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). User-visible changes are recorded in [`docs/CHANGELOG.md`](docs/CHANGELOG.md).
+
 ## License
 
-MIT
+[MIT](LICENSE)
