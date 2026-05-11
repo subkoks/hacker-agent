@@ -12,7 +12,7 @@ permissions:
 jobs:
   auto-commit:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/develop'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -57,13 +57,13 @@ jobs:
           git commit -m "chore(auto): scheduled update $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
           git push -u origin "${{ steps.branch.outputs.branch }}"
 
-      - name: Open pull request to main
+      - name: Open pull request to develop
         if: steps.changes.outputs.changes == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr create \
-            --base main \
+            --base develop \
             --head "${{ steps.branch.outputs.branch }}" \
             --title "auto: scheduled update" \
             --body "Automated update from scheduled auto-commit job. Review and merge if green." \
