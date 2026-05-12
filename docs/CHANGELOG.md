@@ -4,6 +4,8 @@ All notable changes to `hacker-agent` are documented here. The format follows [K
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-05-12
+
 ### Added
 - `.github/dependabot.yml` — weekly pip + github-actions update PRs targeting `develop`.
 - Issue templates (`bug.yml`, `feature.yml`) and pull request template under `.github/`.
@@ -13,6 +15,8 @@ All notable changes to `hacker-agent` are documented here. The format follows [K
 - `LICENSE` (MIT) and `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1).
 - `.github/workflows/release.yml` — tag-triggered build of wheel + sdist with auto-generated GitHub release notes pulled from this changelog.
 - 39 new tests (`test_memory_extra.py`, `test_cli_extra.py`) raising the suite from 47 → 86 and total coverage from 77% → 92%.
+- `AGENTS.md` and Cursor project subagents under `.cursor/agents/` for security research and Ghidra workflows.
+- README status badges and `.github/social-preview.png` for public discoverability.
 
 ### Changed
 - `pytest` pinned to `>=9.0.3,<10.0`, `pytest-asyncio` to `>=1.0,<2.0`, and `pytest-cov` upper bound relaxed to `<7.0` to resolve GHSA-6w46-j5rx-g56g (vulnerable tmpdir handling). `[tool.pytest.ini_options].minversion` bumped accordingly.
@@ -24,6 +28,7 @@ All notable changes to `hacker-agent` are documented here. The format follows [K
   explicit note that `.env` is not auto-loaded, macOS/Linux vs WSL guidance,
   Cursor/Ghidra MCP integration boundaries, and auto-mode script expectations
   (including optional variables documented alongside `.env.example`).
+- PyPI/GitHub metadata keywords expanded for security, CVE, Ghidra, MCP, and Cursor discovery.
 
 ### Fixed
 - `hacker-agent stake verify-rtp` no longer crashes with `AttributeError: 'RTPResult' object has no attribute '__dict__'`. `RTPResult` is a `slots=True` dataclass; serialization now uses `dataclasses.asdict`.
@@ -40,5 +45,6 @@ All notable changes to `hacker-agent` are documented here. The format follows [K
 - Typer-based CLI exposed as `hacker-agent` and `python -m hacker_agent`.
 - 47 unit tests covering memory CRUD, CVE importer, audit checklists, Stake Engine math, Ghidra integration, and CLI smoke.
 
-[Unreleased]: https://github.com/subkoks/hacker-agent/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/subkoks/hacker-agent/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/subkoks/hacker-agent/releases/tag/v0.2.1
 [0.2.0]: https://github.com/subkoks/hacker-agent/releases/tag/v0.2.0
