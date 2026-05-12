@@ -180,7 +180,9 @@ hacker-agent ghidra guide
   terminal to run `uv run hacker-agent …`. Optional project subagents live in
   [`.cursor/agents/`](.cursor/agents/); repo rules are in [`AGENTS.md`](AGENTS.md).
   For link previews, upload [`.github/social-preview.png`](.github/social-preview.png)
-  under the repository’s **Settings → General → Social preview** on GitHub.
+  under the repository’s **Settings → General → Social preview** on GitHub (under **1 MB**;
+  use [`.github/repository-open-graph-template.png`](.github/repository-open-graph-template.png)
+  for safe margins).
 - **Ghidra MCP**: The `ghidra` package submodule lists **expected MCP tool names**
   and prints a **workflow guide** to stdout. Disassembly and MCP calls execute
   in your Ghidra-backed MCP server and host agent, not inside `hacker-agent`
