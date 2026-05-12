@@ -20,6 +20,10 @@ All notable changes to `hacker-agent` are documented here. The format follows [K
 - `auto-commit.yml` now runs from `develop` (not `main`) and opens its PRs against `develop`.
 - `update-deps.yml` pip-compile PRs target `develop`.
 - README links to `CONTRIBUTING.md`, `docs/SECURITY.md`, `CODE_OF_CONDUCT.md`, and `docs/CHANGELOG.md`.
+- README: expanded prerequisites, `uv` vs `pip`, environment-variable table,
+  explicit note that `.env` is not auto-loaded, macOS/Linux vs WSL guidance,
+  Cursor/Ghidra MCP integration boundaries, and auto-mode script expectations
+  (including optional variables documented alongside `.env.example`).
 
 ### Fixed
 - `hacker-agent stake verify-rtp` no longer crashes with `AttributeError: 'RTPResult' object has no attribute '__dict__'`. `RTPResult` is a `slots=True` dataclass; serialization now uses `dataclasses.asdict`.
