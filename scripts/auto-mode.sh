@@ -72,7 +72,7 @@ create_backup() {
     cp pyproject.toml "${staging}/" 2>/dev/null || true
 
     python3 -m hacker_agent memory export \
-        "${staging}/brain-export.json" 2>/dev/null \
+        --filepath "${staging}/brain-export.json" 2>/dev/null \
         || log "Brain export skipped"
 
     (cd "${BACKUP_DIR}" && tar -czf "${stamp}.tar.gz" "${stamp}" && rm -rf "${stamp}")

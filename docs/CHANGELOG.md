@@ -23,6 +23,7 @@ All notable changes to `hacker-agent` are documented here. The format follows [K
 
 ### Fixed
 - `hacker-agent stake verify-rtp` no longer crashes with `AttributeError: 'RTPResult' object has no attribute '__dict__'`. `RTPResult` is a `slots=True` dataclass; serialization now uses `dataclasses.asdict`.
+- `scripts/auto-mode.sh` backup export now calls `hacker-agent memory export --filepath` so brain dumps succeed during scheduled cycles.
 
 ### Security
 - Dependabot alert GHSA-6w46-j5rx-g56g (pytest tmpdir handling, medium severity) resolved.
