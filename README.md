@@ -1,12 +1,15 @@
 # hacker-agent
 
-Permanent-memory security research and reverse-engineering agent toolkit.  
-Python **3.13** package built on `uv`, `pydantic`, `httpx`, and `typer`.
+[![CI](https://github.com/subkoks/hacker-agent/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/subkoks/hacker-agent/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/subkoks/hacker-agent?display_name=tag&sort=semver)](https://github.com/subkoks/hacker-agent/releases/latest)
+[![Python](https://img.shields.io/badge/python-3.13%2B-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/github/license/subkoks/hacker-agent)](LICENSE)
+[![uv](https://img.shields.io/badge/uv-managed-7c3aed)](https://github.com/astral-sh/uv)
 
-The agent keeps an SQLite knowledge base across sessions, ingests CVE and CISA
-KEV feeds, generates audit checklists for several target classes, documents the
-expected Ghidra MCP tool surface, and ships Stake Engine–style provably-fair game
-math helpers.
+Permanent-memory **security research** and **reverse-engineering** agent toolkit for
+authorized testers, researchers, and builders. Python **3.13** package on `uv`,
+`pydantic`, `httpx`, and `typer` with SQLite memory, CVE/CISA KEV ingestion, audit
+checklists, Ghidra MCP catalog, and Stake Engine math helpers.
 
 > **Authorized testing only.** Use only with explicit written scope (contract,
 > Rules of Engagement, or program rules). See [`docs/SECURITY.md`](docs/SECURITY.md)
@@ -229,6 +232,7 @@ pytest -q
 ## Links
 
 - Repository: <https://github.com/subkoks/hacker-agent>
+- Latest release: <https://github.com/subkoks/hacker-agent/releases/latest>
 - Issues: <https://github.com/subkoks/hacker-agent/issues>
 - NVD CVE 2.0 API: <https://nvd.nist.gov/developers/vulnerabilities>
 - CISA KEV catalog: <https://www.cisa.gov/known-exploited-vulnerabilities-catalog>

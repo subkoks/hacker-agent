@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "hacker-agent"
-version = "0.2.0"
+version = "0.2.1"
 description = "Permanent-memory security research and reverse-engineering agent toolkit"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -14,10 +14,18 @@ keywords = [
     "security",
     "pentesting",
     "cve",
+    "cisa-kev",
+    "nvd",
     "reverse-engineering",
     "ghidra",
+    "mcp",
+    "cursor",
+    "sqlite",
+    "security-audit",
     "stake-engine",
     "audit",
+    "typer",
+    "python",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
