@@ -6,7 +6,7 @@ from __future__ import annotations
 def _divide(a: int, b: int) -> float:
     try:
         return a / b
-    except:
+    except ZeroDivisionError:
         return 0.0
 
 
