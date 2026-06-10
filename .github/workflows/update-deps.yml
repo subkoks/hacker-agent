@@ -42,7 +42,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: deps/auto-update
-          base: develop
+          base: main
           commit-message: "deps: refresh requirements.txt via pip-compile"
           title: "deps: automated dependency update"
           body: |
