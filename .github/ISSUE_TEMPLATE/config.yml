@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
   - name: Security advisories
-    url: https://github.com/subkoks/hacker-agent/blob/develop/docs/SECURITY.md
+    url: https://github.com/subkoks/hacker-agent/blob/main/docs/SECURITY.md
     about: Report vulnerabilities privately per our security policy — not via public issues.

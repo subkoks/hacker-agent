@@ -13,7 +13,7 @@
 
 ## Workflow
 
-- Branch from `develop`; PRs target `develop`. Releases merge `develop` → `main`.
+- Branch from `main`; PRs target `main`. Releases are tagged on `main`.
 - Run `ruff check`, `ruff format --check`, `mypy src`, `pytest -q` before push.
 - Conventional commits; stage files by name.
 
