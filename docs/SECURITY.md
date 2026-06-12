@@ -38,7 +38,7 @@ The following are **out of scope**:
 
 ## Dependabot alerts policy
 
-Dependabot is enabled and configured to open PRs against `develop` weekly. The repo has historically surfaced two categories of alert:
+Dependabot is enabled and configured to open PRs against `main` weekly. The repo has historically surfaced two categories of alert:
 
 1. **Real CVEs in pinned dependencies** — fixed by bumping the version in `pyproject.toml`, syncing `uv.lock`, and merging the resulting PR. Example: GHSA-6w46-j5rx-g56g (pytest tmpdir handling) — resolved by pinning `pytest>=9.0.3`.
 2. **"Malware" flags on transitive packages** — investigated case-by-case. If the package is genuinely malicious, it is replaced. If the alert is a false positive (e.g., the dependency does pattern matching that mimics security-research strings), the rationale is documented in this file.

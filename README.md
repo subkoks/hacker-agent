@@ -47,7 +47,7 @@ data/                    # Default SQLite location (gitignored; `.gitkeep` track
 ```bash
 git clone https://github.com/subkoks/hacker-agent.git
 cd hacker-agent
-git checkout develop   # default integration branch; use tags for releases
+# main is the default branch; use tags for releases
 ```
 
 ### 2. Create the environment
@@ -147,8 +147,8 @@ uv run mypy src
 uv run pytest -q --cov=src/hacker_agent
 ```
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) for branch flow (`develop` → PR → `main`
-on release) and review expectations.
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for branch flow (feature branch → PR →
+`main`) and review expectations.
 
 ## Usage examples
 

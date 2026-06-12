@@ -25,9 +25,9 @@ uv run python -m hacker_agent --version
 
 ## Branch & commit flow
 
-- `main` and `develop` are protected. Never push directly.
+- `main` is protected. Never push directly.
 - Branch naming: `feature/<topic>`, `fix/<topic>`, `chore/<topic>`, `docs/<topic>`, `deps/<topic>`.
-- Open PRs against `develop`. `develop` is merged into `main` for releases.
+- Branch from `main` and open PRs against `main`. Releases are tagged on `main`.
 - Commits use [Conventional Commits](https://www.conventionalcommits.org/): `type(scope): short description`.
 - One logical change per commit; rebase to clean history before review.
 - Stage files by name (`git add path/to/file`). Avoid `git add -A` / `git add .`.

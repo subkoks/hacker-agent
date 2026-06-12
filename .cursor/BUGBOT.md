@@ -20,7 +20,7 @@
 
 ## Branch workflow
 
-- PRs target `develop`; releases merge to `main` — flag PRs targeting wrong base without reason.
+- PRs target `main` — flag PRs targeting wrong base without reason.
 
 ## Before merge
 

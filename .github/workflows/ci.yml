@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, develop, "auto/**", "feature/**", "fix/**", "chore/**", "deps/**"]
+    branches: [main, "auto/**", "feature/**", "fix/**", "chore/**", "deps/**"]
   pull_request:
-    branches: [main, develop]
+    branches: [main]
   workflow_dispatch:
 
 jobs:

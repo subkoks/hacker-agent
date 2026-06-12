@@ -18,7 +18,7 @@
 
 ## Checklist
 
-- [ ] Branch follows the documented flow (feature/fix → develop → main)
+- [ ] Branch follows the documented flow (feature/fix → main)
 - [ ] Commits use conventional commit format
 - [ ] No secrets, tokens, or `.db` files committed
 - [ ] Public API changes documented in `docs/CHANGELOG.md`

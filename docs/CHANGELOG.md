@@ -4,6 +4,9 @@ All notable changes to `hacker-agent` are documented here. The format follows [K
 
 ## [Unreleased]
 
+### Changed
+- Branch flow is now main-based — the `develop` branch no longer exists. Updated README install step, `CONTRIBUTING.md`, `AGENTS.md`, `.cursor/BUGBOT.md`, `docs/SECURITY.md`, PR/issue templates, `ci.yml` triggers, `auto-commit.yml`, and Dependabot `target-branch` to reference `main`.
+
 ## [0.2.1] - 2026-05-12
 
 ### Added
