@@ -6,7 +6,7 @@ updates:
       interval: "weekly"
       day: "monday"
     open-pull-requests-limit: 5
-    target-branch: "develop"
+    target-branch: "main"
     reviewers:
       - "subkoks"
     labels:
@@ -21,7 +21,7 @@ updates:
       interval: "weekly"
       day: "monday"
     open-pull-requests-limit: 5
-    target-branch: "develop"
+    target-branch: "main"
     reviewers:
       - "subkoks"
     labels:
