@@ -103,5 +103,8 @@ secrets/
 node_modules/
 
 # Local Claude / agent caches
-.claude/
 .cursor/cache/
+
+# Claude Code (commit shared settings; ignore machine-local perms + transcripts)
+.claude/*
+!.claude/settings.json
