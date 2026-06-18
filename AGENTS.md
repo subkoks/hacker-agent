@@ -19,4 +19,7 @@
 
 ## Project subagents
 
-Use `.cursor/agents/` definitions for domain-specific delegation in Cursor.
+Domain-specific delegation lives in `.claude/agents/` (Claude Code) and
+`.cursor/agents/` (Cursor): `security-researcher` (authorized research, CVE
+triage, memory) and `ghidra-reverse-engineer` (Ghidra MCP RE). Keep both copies
+in sync when adding or editing an agent.
