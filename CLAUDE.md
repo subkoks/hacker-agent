@@ -36,7 +36,8 @@ offensive workflow. Never commit secrets, `.env`, keys, or the live memory DB.
 ## Commands
 
 ```bash
-uv sync                              # install deps into .venv
+uv sync                              # install runtime deps into .venv
+uv sync --extra dev                  # add dev tooling (pytest, mypy) — needed for the checks below
 uv run hacker-agent --help           # run the CLI
 uv run ruff check . && uv run ruff format --check .
 uv run mypy src
