@@ -51,7 +51,7 @@ Run lint + format-check + mypy + pytest before every push.
 
 - `snake_case`; type hints at boundaries; validate external/feed input with pydantic.
 - Branch from `main`; PRs target `main`; conventional commits; stage files by name.
-- Releases tagged on `main`. Project subagents live in `.claude/agents/` (Claude Code) and `.cursor/agents/` (Cursor) — keep the two in sync when adding or changing an agent.
+- Releases tagged on `main`. Project subagents live in `.claude/agents/` (Claude Code). Cursor retired 2026-06-17 — `.cursor/agents/` no longer maintained.
 
 ## CI
 
