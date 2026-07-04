@@ -46,7 +46,7 @@ shellingham==1.5.4
     # via typer
 six==1.17.0
     # via python-dateutil
-typer==0.26.7
+typer==0.26.8
     # via -r requirements.in
 typing-extensions==4.15.0
     # via
