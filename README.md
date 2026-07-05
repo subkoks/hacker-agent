@@ -176,9 +176,10 @@ hacker-agent ghidra guide
 
 ## Cursor, editors, and Ghidra MCP
 
-- **Cursor / VS Code**: Open the cloned repository folder. Use the integrated
-  terminal to run `uv run hacker-agent …`. Optional project subagents live in
-  [`.cursor/agents/`](.cursor/agents/); repo rules are in [`AGENTS.md`](AGENTS.md).
+- **Cursor / VS Code**: Open the cloned repository folder. Run `./install.sh` to wire
+  project subagents into `~/.cursor/agents/`. Use the integrated terminal to run
+  `uv run hacker-agent …`. Subagent sources live in [`.cursor/agents/`](.cursor/agents/)
+  and [`.claude/agents/`](.claude/agents/); repo rules are in [`AGENTS.md`](AGENTS.md).
   For link previews, upload [`.github/social-preview.png`](.github/social-preview.png)
   under the repository’s **Settings → General → Social preview** on GitHub (under **1 MB**;
   use [`.github/repository-open-graph-template.png`](.github/repository-open-graph-template.png)
