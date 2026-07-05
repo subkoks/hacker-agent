@@ -105,6 +105,11 @@ node_modules/
 # Local Claude / agent caches
 .cursor/cache/
 
+# Codex CLI
+!.codex/
+.codex/*
+!.codex/config.toml
+
 # Claude Code (commit shared settings + subagents; ignore machine-local perms + transcripts)
 .claude/*
 !.claude/settings.json

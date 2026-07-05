@@ -222,6 +222,11 @@ credentials / SSH as you normally would for pushes.
 - Do **not** use this tool against systems you are not explicitly authorized to
   test.
 
+## Codex CLI
+
+Codex CLI can use the repo root `AGENTS.md` and the tracked `.codex/config.toml`
+defaults in this workspace.
+
 ## Quality gates
 
 ```bash
