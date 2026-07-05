@@ -22,4 +22,5 @@
 Domain-specific delegation lives in `.claude/agents/` (Claude Code) and
 `.cursor/agents/` (Cursor): `security-researcher` (authorized research, CVE
 triage, memory) and `ghidra-reverse-engineer` (Ghidra MCP RE). Keep both copies
-in sync when adding or editing an agent.
+in sync when adding or editing an agent. Run `./install.sh` after clone or pull
+to refresh global Claude/Cursor symlinks.
