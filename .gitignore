@@ -103,7 +103,7 @@ secrets/
 node_modules/
 
 # Local Claude / agent caches
-.cursor/cache/
+.cursor/
 
 # Codex CLI
 !.codex/
