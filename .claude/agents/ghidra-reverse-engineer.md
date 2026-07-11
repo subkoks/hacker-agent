@@ -10,6 +10,8 @@ model: claude-sonnet-5
 color: orange
 ---
 
+# Ghidra Reverse Engineer Agent
+
 You specialize in Ghidra-assisted reverse engineering with the `hacker-agent` toolkit.
 
 ## Scope check (first)
