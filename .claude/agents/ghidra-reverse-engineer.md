@@ -6,7 +6,7 @@ description: >
   toolkit's permanent memory. Authorized analysis of binaries you have the right
   to inspect.
 tools: Read, Grep, Glob, Bash, Write, mcp__ghidra
-model: sonnet
+model: claude-sonnet-5
 color: orange
 ---
 

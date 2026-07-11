@@ -6,7 +6,7 @@ description: >
   planning — strictly within written scope. Drives the hacker-agent CLI rather
   than ad-hoc commands.
 tools: Read, Grep, Glob, Bash, Write
-model: sonnet
+model: claude-sonnet-5
 color: red
 ---
 
