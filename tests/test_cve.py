@@ -59,9 +59,9 @@ def _build_importer(memory: HackerMemorySystem, transport: httpx.MockTransport) 
 
 def test_import_recent_cves_persists_to_memory(memory: HackerMemorySystem) -> None:
     def handler(request: httpx.Request) -> httpx.Response:
-        if "nvd.nist.gov" in request.url.host:
+        if request.url.host == "services.nvd.nist.gov":
             return httpx.Response(200, json=_nvd_sample())
-        if "cisa.gov" in request.url.host:
+        if request.url.host == "www.cisa.gov":
             return httpx.Response(200, json=_kev_sample())
         return httpx.Response(404)
 
@@ -80,7 +80,7 @@ def test_import_recent_cves_persists_to_memory(memory: HackerMemorySystem) -> No
 
 def test_import_skips_low_severity_without_kev(memory: HackerMemorySystem) -> None:
     def handler(request: httpx.Request) -> httpx.Response:
-        if "nvd.nist.gov" in request.url.host:
+        if request.url.host == "services.nvd.nist.gov":
             return httpx.Response(200, json=_nvd_sample(cve_id="CVE-2025-00001", cvss=3.1))
         return httpx.Response(200, json={"vulnerabilities": []})
 
