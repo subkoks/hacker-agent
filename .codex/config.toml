@@ -1,5 +1,5 @@
 # Repo-local Codex defaults for this workspace.
 
-sandbox_mode = "workspace-write"
+default_permissions = ":workspace"
 approval_policy = "on-request"
 allow_login_shell = true
