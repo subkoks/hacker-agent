@@ -1,36 +1,23 @@
-# hacker-agent
+<h1>
+  <picture>
+    <source media="(max-width: 600px)" srcset="assets/readme/hero-mobile.svg">
+    <img src="assets/readme/hero.svg" width="100%" alt="Hacker agent — BLACK.TERMINAL">
+  </picture>
+</h1>
+
+**hacker-agent** is a permanent-memory toolkit for authorized security research and reverse engineering. SQLite memory, CVE/CISA KEV ingestion, audit checklists, a Ghidra MCP catalog, and Stake Engine math helpers run through a Python CLI.
+
+**[Install](#install)** · [Run](#run) · [Usage examples](#usage-examples) · [Configuration](#configuration-and-environment-variables) · [Quality gates](#quality-gates)
 
 [![CI](https://github.com/subkoks/hacker-agent/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/subkoks/hacker-agent/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/subkoks/hacker-agent?display_name=tag&sort=semver)](https://github.com/subkoks/hacker-agent/releases/latest)
-[![Python](https://img.shields.io/badge/python-3.13%2B-blue.svg)](https://www.python.org/downloads/)
+[![Python](https://img.shields.io/badge/python-3.13%2B-393632?labelColor=1B1A18)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/github/license/subkoks/hacker-agent)](LICENSE)
-[![uv](https://img.shields.io/badge/uv-managed-7c3aed)](https://github.com/astral-sh/uv)
-
-Permanent-memory **security research** and **reverse-engineering** agent toolkit for
-authorized testers, researchers, and builders. Python **3.13** package on `uv`,
-`pydantic`, `httpx`, and `typer` with SQLite memory, CVE/CISA KEV ingestion, audit
-checklists, Ghidra MCP catalog, and Stake Engine math helpers.
 
 > **Authorized testing only.** Use only with explicit written scope (contract,
 > Rules of Engagement, or program rules). See [`docs/SECURITY.md`](docs/SECURITY.md)
 > for disclosure policy and [`docs/SECURITY.md#authorized-use`](docs/SECURITY.md#authorized-use)
 > for the project’s stance on out-of-scope use.
-
-## Repository layout
-
-```
-src/hacker_agent/
-├── config.py            # Path + env resolution (no hardcoded absolute paths)
-├── memory/              # SQLite knowledge base + Pydantic models
-├── cli/                 # Typer CLI (`python -m hacker_agent` / `hacker-agent`)
-├── cve/                 # NVD + CISA KEV importer (direct HTTP, no subprocess)
-├── stake/               # Provably-fair game math + RGS templates
-├── audit/               # Security-audit checklist generator
-└── ghidra/              # Ghidra MCP tool catalog + memory bridge
-scripts/                 # Bash automation (auto-mode, auto-commit)
-tests/                   # pytest suite
-data/                    # Default SQLite location (gitignored; `.gitkeep` tracked)
-```
 
 ## Requirements
 
@@ -82,38 +69,6 @@ the virtual environment is activated. With **uv** and no shell activation, use
 ```bash
 uv run hacker-agent --version
 uv run python -m hacker_agent --version
-```
-
-## Configuration and environment variables
-
-1. Copy the template: `cp .env.example .env` and edit values for your machine.
-2. **This package does not auto-load `.env`.** Export variables in your shell,
-   use [`direnv`](https://direnv.net/), or wrap commands, for example:
-
-   ```bash
-   set -a && source .env && set +a && uv run hacker-agent dashboard
-   ```
-
-Resolved paths are **project-root relative** unless an absolute path is given
-(see `src/hacker_agent/config.py`).
-
-| Variable | Purpose | Default |
-|----------|---------|---------|
-| `HACKER_DATA_DIR` | Directory for SQLite and default dump paths | `<repo>/data` |
-| `HACKER_MEMORY_DB` | SQLite database file | `<data>/hacker-memory.db` |
-| `HACKER_LOG_DIR` | `auto-mode` / `auto-commit` logs | `<repo>/logs` |
-| `HACKER_BACKUP_DIR` | `auto-mode` tarball backups | `<repo>/backups` |
-| `HACKER_AUTO_INTERVAL` | Seconds between daemon cycles in `scripts/auto-mode.sh start` | `3600` |
-| `NVD_API_BASE` | NVD CVE 2.0 JSON endpoint | Public NVD URL in `.env.example` |
-| `CISA_KEV_URL` | CISA KEV JSON feed URL | Official CISA URL |
-| `AUTO_COMMIT_BRANCH_PREFIX` | Prefix for branches created by `scripts/auto-commit.sh` on `main`/`master` | `auto/` |
-| `GHIDRA_PROJECT_DIR` | Default Ghidra project directory hint (`GhidraIntegration`) | `~/Projects/ghidra-re/projects` |
-| `GITHUB_TOKEN` | **Not read by the Python package today**; reserved for local GitHub automation you may layer on (for example `gh` auth). | _(empty)_ |
-
-Show the resolved database path:
-
-```bash
-uv run hacker-agent memory path
 ```
 
 ## Run
@@ -172,6 +127,38 @@ hacker-agent stake verify-rtp --game crash --rounds 100000
 # Ghidra MCP catalog + workflow text (see below)
 hacker-agent ghidra tools
 hacker-agent ghidra guide
+```
+
+## Configuration and environment variables
+
+1. Copy the template: `cp .env.example .env` and edit values for your machine.
+2. **This package does not auto-load `.env`.** Export variables in your shell,
+   use [`direnv`](https://direnv.net/), or wrap commands, for example:
+
+   ```bash
+   set -a && source .env && set +a && uv run hacker-agent dashboard
+   ```
+
+Resolved paths are **project-root relative** unless an absolute path is given
+(see `src/hacker_agent/config.py`).
+
+| Variable | Purpose | Default |
+|----------|---------|---------|
+| `HACKER_DATA_DIR` | Directory for SQLite and default dump paths | `<repo>/data` |
+| `HACKER_MEMORY_DB` | SQLite database file | `<data>/hacker-memory.db` |
+| `HACKER_LOG_DIR` | `auto-mode` / `auto-commit` logs | `<repo>/logs` |
+| `HACKER_BACKUP_DIR` | `auto-mode` tarball backups | `<repo>/backups` |
+| `HACKER_AUTO_INTERVAL` | Seconds between daemon cycles in `scripts/auto-mode.sh start` | `3600` |
+| `NVD_API_BASE` | NVD CVE 2.0 JSON endpoint | Public NVD URL in `.env.example` |
+| `CISA_KEV_URL` | CISA KEV JSON feed URL | Official CISA URL |
+| `AUTO_COMMIT_BRANCH_PREFIX` | Prefix for branches created by `scripts/auto-commit.sh` on `main`/`master` | `auto/` |
+| `GHIDRA_PROJECT_DIR` | Default Ghidra project directory hint (`GhidraIntegration`) | `~/Projects/ghidra-re/projects` |
+| `GITHUB_TOKEN` | **Not read by the Python package today**; reserved for local GitHub automation you may layer on (for example `gh` auth). | _(empty)_ |
+
+Show the resolved database path:
+
+```bash
+uv run hacker-agent memory path
 ```
 
 ## Cursor, editors, and Ghidra MCP
@@ -239,6 +226,27 @@ pytest -q
 
 (Prefer `uv run …` as shown in [Development commands](#development-commands).)
 
+## Repository layout
+
+<details>
+<summary>Python package, automation, tests, and data</summary>
+
+```
+src/hacker_agent/
+├── config.py            # Path + env resolution (no hardcoded absolute paths)
+├── memory/              # SQLite knowledge base + Pydantic models
+├── cli/                 # Typer CLI (`python -m hacker_agent` / `hacker-agent`)
+├── cve/                 # NVD + CISA KEV importer (direct HTTP, no subprocess)
+├── stake/               # Provably-fair game math + RGS templates
+├── audit/               # Security-audit checklist generator
+└── ghidra/              # Ghidra MCP tool catalog + memory bridge
+scripts/                 # Bash automation (auto-mode, auto-commit)
+tests/                   # pytest suite
+data/                    # Default SQLite location (gitignored; `.gitkeep` tracked)
+```
+
+</details>
+
 ## Links
 
 - Repository: <https://github.com/subkoks/hacker-agent>
@@ -258,3 +266,7 @@ User-visible changes are recorded in [`docs/CHANGELOG.md`](docs/CHANGELOG.md).
 ## License
 
 [MIT](LICENSE)
+
+---
+
+<img src="assets/readme/dot.svg" width="12" height="12" alt=""> **BLACK.TERMINAL** · [MIT License](LICENSE) · [GitHub](https://github.com/subkoks)

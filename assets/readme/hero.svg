@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="300" viewBox="0 0 960 300" role="img" aria-labelledby="title">
+<title id="title">Hacker agent. — Security research</title>
+<rect width="960" height="300" rx="8" fill="#111110"/>
+<circle cx="48" cy="32" r="4" fill="#FF7F0E"/>
+<text x="62" y="37" fill="#B5B0A8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" font-weight="400" letter-spacing="1.5">BLACK.TERMINAL</text>
+<text x="916" y="37" fill="#B5B0A8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" font-weight="400" text-anchor="end" letter-spacing="1.2">SECURITY RESEARCH</text>
+<text x="44" y="130" fill="#F3F0EB" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="60" font-weight="600" letter-spacing="-1.5">Hacker</text>
+<text x="44" y="196" fill="#F3F0EB" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="60" font-weight="600" letter-spacing="-1.5">agent.</text>
+<path d="M44 249H916" stroke="#393632"/>
+<text x="44" y="275" fill="#B5B0A8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" font-weight="400" letter-spacing="0.5">MEMORY / RESEARCH / REVERSE ENGINEERING</text>
+<g transform="translate(802 143)" fill="none" stroke-width="1.5"><path d="m0-58 49 18v39c0 25-28 49-49 60-21-11-49-35-49-60v-39Z" stroke="#393632"/><path d="m-20 0 14 14 29-31" stroke="#FF7F0E" stroke-width="2"/></g>
+</svg>
