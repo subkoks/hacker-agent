@@ -1,5 +1,6 @@
 # Repo-local Codex defaults for this workspace.
 
-default_permissions = ":workspace"
+model = "gpt-6.1-sol"
+sandbox_mode = "workspace-write"
 approval_policy = "on-request"
 allow_login_shell = true

@@ -2,8 +2,9 @@
 
 @AGENTS.md
 
-> The block above imports the canonical project rules. This file adds the
-> Claude Code working map: architecture, commands, and gotchas.
+> Legacy compatibility project map. The supported coding workspace uses
+> Microsoft VS Code and OpenAI Codex; follow `AGENTS.md` and `.codex/config.toml`.
+> The import above is for legacy clients, not a Codex configuration directive.
 
 ## What this is
 
@@ -51,10 +52,12 @@ Run lint + format-check + mypy + pytest before every push.
 
 - `snake_case`; type hints at boundaries; validate external/feed input with pydantic.
 - Branch from `main`; PRs target `main`; conventional commits; stage files by name.
-- Releases tagged on `main`. Project subagents live in `.claude/agents/` (Claude Code). Cursor retired 2026-06-17 — `.cursor/agents/` no longer maintained.
+- Releases tagged on `main`. Legacy agent definitions remain in `.claude/agents/`
+  and `.cursor/agents/`. Preserve these compatibility assets; do not extend retired
+  editor integrations. `install.sh` is legacy tooling and is not needed for Codex.
 
 ## CI
 
-`@claude` mentions invoke the agent; PRs get automatic Claude review. Dependabot
-is enabled (`.github/dependabot.yml`). Don't commit `data/hacker-memory.db`,
-`.venv/`, or cache dirs — they're gitignored.
+Current validation workflows live in `.github/workflows/`; review them before
+making CI changes. Dependabot is configured in `.github/dependabot.yml`.
+Don't commit `data/hacker-memory.db`, `.venv/`, or cache dirs — they're gitignored.
