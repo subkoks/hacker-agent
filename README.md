@@ -161,13 +161,18 @@ Show the resolved database path:
 uv run hacker-agent memory path
 ```
 
-## Cursor, editors, and Ghidra MCP
+## VS Code, Codex, and Ghidra MCP
 
-- **Cursor / VS Code**: Open the cloned repository folder. Run `./install.sh` to wire
-  project subagents into `~/.cursor/agents/`. Use the integrated terminal to run
-  `uv run hacker-agent …`. Subagent sources live in [`.cursor/agents/`](.cursor/agents/)
-  and [`.claude/agents/`](.claude/agents/); repo rules are in [`AGENTS.md`](AGENTS.md).
-  For link previews, upload [`.github/social-preview.png`](.github/social-preview.png)
+- **Microsoft VS Code / OpenAI Codex**: Open the repository with `code .` and use
+  the official Codex extension or `codex` in the integrated terminal. The preferred
+  model is GPT-6.1 Sol (`gpt-6.1-sol`). Repository guidance is in
+  [`AGENTS.md`](AGENTS.md), with project settings in [`.codex/config.toml`](.codex/config.toml).
+  Use your existing user-level OpenAI provider/login configuration; no Anthropic
+  setup or legacy installer is required. Run `uv run hacker-agent …` from the terminal.
+- **Legacy compatibility**: [`.cursor/agents/`](.cursor/agents/) and
+  [`.claude/agents/`](.claude/agents/) retain historical agent definitions.
+  `install.sh` wires legacy Claude/Cursor symlinks; it is not a Codex installer.
+- **Repository link previews**: Upload [`.github/social-preview.png`](.github/social-preview.png)
   under the repository’s **Settings → General → Social preview** on GitHub (under **1 MB**;
   use [`.github/repository-open-graph-template.png`](.github/repository-open-graph-template.png)
   for safe margins).
@@ -212,8 +217,12 @@ credentials / SSH as you normally would for pushes.
 
 ## Codex CLI
 
-Codex CLI can use the repo root `AGENTS.md` and the tracked `.codex/config.toml`
-defaults in this workspace.
+Codex uses the repository's [`AGENTS.md`](AGENTS.md) guidance. In a trusted project,
+the tracked [`.codex/config.toml`](.codex/config.toml) selects `gpt-6.1-sol`, workspace
+write access, and approval prompts. Provider/login settings stay in your existing
+user configuration. Start `codex` from the repository root; no `install.sh` step is
+needed. See the official [configuration reference](https://learn.chatgpt.com/docs/config-file/config-reference)
+and [AGENTS.md guide](https://learn.chatgpt.com/docs/agent-configuration/agents-md).
 
 ## Quality gates
 
