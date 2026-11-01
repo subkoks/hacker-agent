@@ -4,7 +4,7 @@ This module catalogs the Ghidra MCP tools the agent expects to be wired through
 the MCP server (Reverse-engineering surface). It also exposes a thin helper that
 records analysis findings into :class:`HackerMemorySystem`.
 
-The actual MCP calls are issued by the host (Claude Code) — this module is the
+The actual MCP calls are issued by the host agent — this module is the
 catalog + memory glue, not an MCP client.
 """
 
