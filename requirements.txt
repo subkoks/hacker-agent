@@ -10,7 +10,7 @@ annotated-types==0.8.0
     # via pydantic
 anyio==4.15.1
     # via httpx
-certifi==2026.10.19
+certifi==2026.10.23
     # via
     #   httpcore
     #   httpx
@@ -28,15 +28,15 @@ markdown-it-py==4.2.0
     # via rich
 mdurl==0.1.2
     # via markdown-it-py
-platformdirs==4.13.5
+platformdirs==4.14.2
     # via -r requirements.in
-pydantic==2.14.1
+pydantic==2.14.2
     # via -r requirements.in
-pydantic-core==2.50.1
+pydantic-core==2.50.2
     # via pydantic
 pygments==2.21.0
     # via rich
-python-dateutil==2.9.0.post0
+python-dateutil==3.0.0
     # via -r requirements.in
 rich==15.0.0
     # via
@@ -56,3 +56,5 @@ typing-extensions==4.16.0
     #   typing-inspection
 typing-inspection==0.4.4
     # via pydantic
+tzdata==2026.6
+    # via python-dateutil
