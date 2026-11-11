@@ -1,0 +1,113 @@
+name: Requirements Validation
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - requirements.txt
+      - .github/workflows/requirements-validation.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  requirements:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+        with:
+          enable-cache: false
+
+      - name: Install and verify the requirements graph
+        shell: bash
+        env:
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          printf 'PR head: %s\nChecked-out commit: %s\n' "$PR_HEAD_SHA" "$(git rev-parse HEAD)"
+          uv python install 3.13
+          uv venv --python 3.13 "$RUNNER_TEMP/requirements-venv"
+          python="$RUNNER_TEMP/requirements-venv/bin/python"
+
+          uv pip install --python "$python" --no-deps -r requirements.txt -e .
+          uv pip check --python "$python"
+
+          uv export --offline --locked --extra dev --no-emit-project --no-hashes \
+            --no-header --no-annotate > "$RUNNER_TEMP/requirements-uv-export.txt"
+
+          "$python" - <<'PY'
+          import os
+          import re
+          import subprocess
+          import sys
+          from importlib.metadata import version
+          from pathlib import Path
+
+          def package_key(name):
+              return re.sub(r"[-_.]+", "-", name).lower()
+
+          pins = {}
+          for line in Path("requirements.txt").read_text().splitlines():
+              pin = line.partition("#")[0].strip()
+              if not pin:
+                  continue
+              match = re.fullmatch(r"([\w.-]+)==([\w.!+-]+)", pin)
+              if not match:
+                  raise SystemExit(f"Expected an exact requirements.txt pin: {pin}")
+              name, expected = match.groups()
+              key = package_key(name)
+              if key in pins:
+                  raise SystemExit(f"Duplicate requirements.txt pin: {name}")
+              pins[key] = expected
+          if not pins:
+              raise SystemExit("requirements.txt contains no runtime pins")
+
+          # Keep the uv-locked test tools and give shared dependencies the candidate pins.
+          temp = Path(os.environ["RUNNER_TEMP"])
+          exported = (temp / "requirements-uv-export.txt").read_text().splitlines()
+          constraints = temp / "requirements-dev-constraints.txt"
+          constraints.write_text("\n".join(
+              line for line in exported if package_key(line.partition("==")[0]) not in pins
+          ) + "\n")
+          pip = ["uv", "pip"]
+          subprocess.run([
+              *pip, "install", "--python", sys.executable, "-e", ".[dev]",
+              "-c", "requirements.txt", "-c", str(constraints),
+          ], check=True)
+          subprocess.run([*pip, "check", "--python", sys.executable], check=True)
+
+          for name, expected in sorted(pins.items()):
+              installed = version(name)
+              if installed != expected:
+                  raise SystemExit(f"{name}: expected {expected}, installed {installed}")
+              print(f"{name}=={installed}")
+          PY
+
+      - name: Run offline checks in the requirements environment
+        shell: bash
+        run: |
+          python="$RUNNER_TEMP/requirements-venv/bin/python"
+          runtime="$(mktemp -d "$RUNNER_TEMP/requirements-runtime.XXXXXX")"
+          sudo unshare --net -- runuser -u "$(id -un)" -- env \
+            HACKER_DATA_DIR="$runtime/data" HACKER_MEMORY_DB="$runtime/hacker-memory.db" \
+            HACKER_LOG_DIR="$runtime/logs" HACKER_BACKUP_DIR="$runtime/backups" \
+            XDG_DATA_HOME="$runtime/xdg" \
+            bash -euo pipefail -s -- "$python" <<'BASH'
+          python="$1"
+          "$python" -m ruff check src tests
+          "$python" -m ruff format --check src tests
+          "$python" -m mypy src
+          "$python" -m pytest -q -m 'not network' --cov=src/hacker_agent --cov-report=term-missing
+          "$python" -m hacker_agent --version
+          "$python" -m hacker_agent --help
+          "$python" -m hacker_agent memory --help
+          "$python" -c 'import os; from pathlib import Path; from platformdirs import user_data_path; assert user_data_path("hacker-agent") == Path(os.environ["XDG_DATA_HOME"]) / "hacker-agent"'
+          BASH
