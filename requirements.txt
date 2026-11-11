@@ -30,9 +30,9 @@ mdurl==0.1.2
     # via markdown-it-py
 platformdirs==4.14.5
     # via -r requirements.in
-pydantic==2.14.1
+pydantic==2.14.3
     # via -r requirements.in
-pydantic-core==2.50.1
+pydantic-core==2.50.4
     # via pydantic
 pygments==2.21.0
     # via rich
@@ -46,7 +46,7 @@ shellingham==1.5.4
     # via typer
 six==1.17.0
     # via python-dateutil
-typer==0.27.3
+typer==0.28.0
     # via -r requirements.in
 typing-extensions==4.16.0
     # via
