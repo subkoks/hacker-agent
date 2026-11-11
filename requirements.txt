@@ -36,7 +36,7 @@ pydantic-core==2.50.4
     # via pydantic
 pygments==2.21.0
     # via rich
-python-dateutil==2.9.0.post0
+python-dateutil==4.0.0
     # via -r requirements.in
 rich==15.0.0
     # via
@@ -44,8 +44,6 @@ rich==15.0.0
     #   typer
 shellingham==1.5.4
     # via typer
-six==1.17.0
-    # via python-dateutil
 typer==0.28.0
     # via -r requirements.in
 typing-extensions==4.16.0
@@ -56,3 +54,5 @@ typing-extensions==4.16.0
     #   typing-inspection
 typing-inspection==0.4.5
     # via pydantic
+tzdata==2026.6
+    # via python-dateutil
