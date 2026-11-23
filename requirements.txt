@@ -4,13 +4,13 @@
 #
 #    pip-compile --output-file=requirements.txt requirements.in
 #
-annotated-doc==0.0.6
+annotated-doc==0.0.7
     # via typer
 annotated-types==0.8.0
     # via pydantic
 anyio==4.16.0
     # via httpx
-certifi==2026.10.23
+certifi==2026.11.20
     # via
     #   httpcore
     #   httpx
@@ -28,13 +28,13 @@ markdown-it-py==4.3.0
     # via rich
 mdurl==0.1.2
     # via markdown-it-py
-platformdirs==4.14.5
+platformdirs==4.14.8
     # via -r requirements.in
-pydantic==2.14.3
+pydantic==2.14.4
     # via
     #   -r requirements.in
     #   typer
-pydantic-core==2.50.4
+pydantic-core==2.50.5
     # via pydantic
 pygments==2.21.0
     # via rich
@@ -46,7 +46,7 @@ rich==15.0.0
     #   typer
 shellingham==1.5.4
     # via typer
-typer==0.29.1
+typer==0.29.2
     # via -r requirements.in
 typing-extensions==4.16.0
     # via
